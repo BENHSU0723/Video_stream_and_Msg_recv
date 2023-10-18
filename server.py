@@ -10,7 +10,7 @@ import struct ## new
 import zlib
 from PIL import Image, ImageOps
 
-HOST=''
+HOST='192.168.20.20'
 PORT=8485
 
 s=socket.socket(socket.AF_INET,socket.SOCK_STREAM)
