@@ -45,10 +45,13 @@ def recv_thread():
     COM_PORT = '/dev/ttyACM0'
     BAUD_RATES=115200
     ser = serial.Serial(COM_PORT,BAUD_RATES)
-    client_socket2 = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    client_socket2.connect(('192.168.20.21', 20101))
+    client_socket2 = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+    #client_socket2.connect(('192.168.20.21', 20101))
     # client_socket2.setblocking(False)
+    addr = ("192.168.20.21",20101)
+    client_socket2.sendto("hello".encode,addr)
     tmp=bytes('Unknown Person\n',encoding='utf8')
+
     try:
         while 1:
             recv_data=client_socket2.recv(1024)
@@ -119,14 +122,14 @@ def client_thread():
 
 
 
-first_thread = threading.Thread(target = client_thread)
-first_thread.start()
+# first_thread = threading.Thread(target = client_thread)
+# first_thread.start()
 
-# second_thread = threading.Thread(target = recv_thread)
-# second_thread.start()
+second_thread = threading.Thread(target = recv_thread)
+second_thread.start()
 
-first_thread.join()
-# second_thread.join()
+# first_thread.join()
+second_thread.join()
 
 # testWebCAM(0)
 print('End main process')
