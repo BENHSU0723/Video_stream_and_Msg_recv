@@ -1,112 +1,19 @@
-# python-webcam-socket-streaming
-Python OpenCV webcam sending frames through TCP socket. 
+# python-webcam-socket-streaming--at the client side, CHT competition
+Python OpenCV webcam sending frames through TCP socket.
 
-## YouTube Tutorial
-[<img src="./screenshot/cover.png" width="550px">](https://www.youtube.com/watch?v=MQ8JfdvA7Yk)
+Ref to: https://github.com/1010code/python-webcam-socket-streaming
 
-## What is a network Socket?
-- A software structure within a network node
-- Serves as an endpoint to send & receive
-- A combination of protocpl type, IP address and Port number for data communication
+## how to run video streaming and receive message
+這邊的概念是要用`client.py`和`client2.py`分別建立一條TCP連線，`client.py`是要建立TCP連線去傳影像的，然後`client2.py`是要建立另一條TCP連線去接收AI server辨識完後傳的字串，並且把訊息轉傳給arduino的serial port
 
-## Implementation of Sockets
-In standard interent protocols like TCP and UDP, socket address is the combination of:
+**注意:兩個程式啟動順序有差，要先執行client.py再開另一個Terminal執行client2.py**
 
-```
-socket address = (IP address, port number)
-```
+* 執行client.py
 
-## How to find IP address?
-Depending on the operating system, you can easily find the IP address of your machine. Go to the terminal window and run this command:
-#### macOS
+`python3 client.py`
 
-```
-ipconfig getifaddr en0
-```
-#### Windows/Linux/Ubuntu
+* 執行client2.py
 
-```
-ifconfig
-```
+`python3 client2.py`
 
-> For Windows users. The required IP address will show against IPv4 Address.
-
-> For Linux and Ubuntu users. The required IP address will be for Wifi LAN (inet).
-
-## client-server model
-- Server creates socket on startup
-- May serve several  clients concurrently
-- A client should know the server IP and port
-
-![](./screenshot/img01.png)
-
-## Python Server module
-
-![](./screenshot/img02.png)
-
-## Python Client module
-
-![](./screenshot/img03.png)
-
-## Video data transmission
-### At server side
-- With OpenCV get video frames of webcam
-- With pickle serialize frame to byte data
-- Pack each frame data using struct module
-- Send data to client and display frame
-
-### At client side
-- Receive packets and append them to data
-- Unpack the data using struct module
-- Load the frame using pickle
-- Display the frame at client side
-
-## Getting Started
-### Clone Project
-you can create a new project based on this repo by doing the following:
-
-```
-git clone https://github.com/1010code/python-webcam-socket-streaming.git
-```
-
-### Installation
-When that's done, install the project dependencies.
-
-```
-pip install -r requirements.txt
-```
-
-#### Run server
-open terminal and execute `server.py`. And we'll create TCP socket and listening 8485 port.
-
-```
-python server.py
-```
-
-### Run client
-After running the `server.py`, copy paste the IP and PORT to `client.py`. After doing that, then start client.
-
-```
-python client.py
-```
-
-## Demo
-- PC 1: run server.py
-- PC 1: run client.py
-
-![](./screenshot/demo.gif)
-
-
-- PC 1: run server.ipynb
-- PC 1: run client.py
-
-![](./screenshot/demo-2.gif)
-
-- PC 1: run server.ipynb
-- PC 2: run client.py
-
-![](./screenshot/demo-3.gif)
-
-## Reference
-- [kittinan/socket](https://gist.github.com/kittinan/e7ecefddda5616eab2765fdb2affed1b)
-- [Socket programming and OpenCv in Python](https://www.youtube.com/watch?v=7-O7yeO3hNQ)
+其他的檔案基本上都是測試的時候使用，不用管他
